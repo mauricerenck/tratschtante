@@ -24,6 +24,10 @@ You have to set a callback secret in your config.php
 ]
 ```
 
+- Go to your webemention.io account and to Webhooks.
+- Enter the Tratschtante endpoint: `https://your-url.tld/tratschtante/webhook/webmentionio`
+- Enter the callback secret you set in your config.php
+
 ## Usage
 
 Whenever a webmention ins received, Tratschtante will trigger a Kirby-Hook your plugin can subscribe to:

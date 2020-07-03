@@ -20,7 +20,7 @@ You have to set a callback secret in your config.php
 
 ```
 [
-    'mauricerenck.tratschtante.secret' => 'my-secret,
+    'mauricerenck.tratschtante.secret' => 'my-secret',
 ]
 ```
 

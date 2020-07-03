@@ -52,6 +52,7 @@ class WebmentionReceiver
             case 'like-of': return 'LIKE';
             case 'in-reply-to': return 'REPLY';
             case 'repost-of': return 'REPOST'; // retweet z.b.
+            case 'mention-of': return 'MENTION'; // classic webmention z.b.
             default: return 'REPLY';
         }
     }
@@ -61,10 +62,10 @@ class WebmentionReceiver
         $authorInfo = $webmention->post->author;
 
         return [
-            'type' => (isset($authorInfo->type)) ? $authorInfo->type : null,
-            'name' => (isset($authorInfo->name)) ? $authorInfo->name : null,
-            'avatar' => (isset($authorInfo->photo)) ? $authorInfo->photo : null,
-            'url' => (isset($authorInfo->url)) ? $authorInfo->url : null,
+            'type' => (isset($authorInfo->type) && !empty($authorInfo->type)) ? $authorInfo->type : null,
+            'name' => (isset($authorInfo->name) && !empty($authorInfo->name)) ? $authorInfo->name : null,
+            'avatar' => (isset($authorInfo->photo) && !empty($authorInfo->photo)) ? $authorInfo->photo : null,
+            'url' => (isset($authorInfo->url) && !empty($authorInfo->url)) ? $authorInfo->url : null,
         ];
     }
 }

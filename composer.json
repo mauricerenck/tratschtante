@@ -1,6 +1,6 @@
 {
   "name": "mauricerenck/tratschtante",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Kirby Webmentions your plugins can subscribe to",
   "type": "kirby-plugin",
   "license": "MIT",
@@ -11,7 +11,10 @@
     }
   ],
   "autoload": {
-    "files": []
+    "files": [
+      "utils/receiver.php",
+      "utils/hookHelper.php"
+    ]
   },
   "require": {
     "getkirby/composer-installer": "^1.1"

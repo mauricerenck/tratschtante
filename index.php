@@ -7,7 +7,8 @@ use Kirby;
 @include_once __DIR__ . '/vendor/autoload.php';
 
 load([
-    'Plugin\Traschtante\WebmentionReceiver' => 'utils/receiver.php'
+    'Plugin\Traschtante\WebmentionReceiver' => 'utils/receiver.php',
+    'Plugin\Traschtante\HookHelper' => 'utils/hookHelper.php'
 ], __DIR__);
 
 Kirby::plugin('mauricerenck/tratschtante', [
@@ -19,6 +20,7 @@ Kirby::plugin('mauricerenck/tratschtante', [
             'action' => function () {
                 $response = json_decode(file_get_contents('php://input'));
                 $receiver = new WebmentionReceiver();
+                $hookHelper = new HookHelper();
                 $webmention = [];
 
                 if ($response->secret !== option('mauricerenck.tratschtante.secret')) {
@@ -33,13 +35,23 @@ Kirby::plugin('mauricerenck/tratschtante', [
                 $webmention['type'] = $receiver->getWebmentionType($response->post->{'wm-property'});
                 $webmention['target'] = $response->post->{'wm-target'};
                 $webmention['source'] = $response->post->{'wm-source'};
-                $webmention['published'] = $response->post->published;
-                $webmention['author'] = $receiver->getAuthor($response);
+                $webmention['published'] = (!is_null($response->post->published)) ? $response->post->published : $response->post->{'wm-received'};
                 $webmention['content'] = (isset($response->post->content) && isset($response->post->content->text)) ? $response->post->content->text : '';
+                $webmention['author'] = $receiver->getAuthor($response);
 
-                kirby()->trigger('tratschtante.webhook.received', $webmention, $targetPage);
+                if ($webmention['type'] === 'MENTION') {
+                    var_dump($webmention['author']['name']);
+                    if (is_null($webmention['author']['name'])) {
+                        $webmention['author']['name'] = $webmention['source'];
+                    }
+                    if (is_null($webmention['author']['url'])) {
+                        $webmention['author']['url'] = $webmention['source'];
+                    }
+                }
 
-                return 'THANKS';
+                $hookHelper->triggerHook('tratschtante.webhook.received', $webmention, $targetPage);
+
+                return $webmention;
             }
         ],
     ]

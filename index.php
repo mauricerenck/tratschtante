@@ -40,7 +40,6 @@ Kirby::plugin('mauricerenck/tratschtante', [
                 $webmention['author'] = $receiver->getAuthor($response);
 
                 if ($webmention['type'] === 'MENTION') {
-                    var_dump($webmention['author']['name']);
                     if (is_null($webmention['author']['name'])) {
                         $webmention['author']['name'] = $webmention['source'];
                     }

@@ -48,7 +48,7 @@ Kirby::plugin('mauricerenck/tratschtante', [
                     }
                 }
 
-                $hookHelper->triggerHook('tratschtante.webhook.received', $webmention, $targetPage);
+                $hookHelper->triggerHook('tratschtante.webhook.received', ['webmention' => $webmention, 'targetPage' => $targetPage]);
 
                 return $webmention;
             }

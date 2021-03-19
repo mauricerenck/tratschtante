@@ -1,6 +1,6 @@
 <?php
 
-namespace Plugin\Traschtante;
+namespace mauricerenck\Traschtante;
 
 use Kirby\Http\Url;
 use Kirby\Toolkit\V;

@@ -1,6 +1,6 @@
 {
   "name": "mauricerenck/tratschtante",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "Kirby Webmentions your plugins can subscribe to",
   "type": "kirby-plugin",
   "license": "MIT",
@@ -11,16 +11,25 @@
     }
   ],
   "autoload": {
-    "files": [
-      "utils/receiver.php",
-      "utils/hookHelper.php"
+    "psr-4": {
+      "mauricerenck\\Tratschtante\\": "utils/"
+    },
+    "classmap": [
+      "utils"
     ]
   },
   "require": {
-    "getkirby/composer-installer": "^1.1",
-    "getkirby/cms": "^3"
+    "getkirby/composer-installer": "^1.1"
+  },
+  "require-dev": {
+    "getkirby/cms": "^3.5"
   },
   "config": {
     "optimize-autoloader": true
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit --testdox tests",
+    "build-test-package": "git archive HEAD -o tratschtante.zip --worktree-attributes",
+    "build-composer": "composer install --no-dev --optimize-autoloader"
   }
 }

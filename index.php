@@ -1,15 +1,10 @@
 <?php
 
-namespace Plugin\Traschtante;
+namespace mauricerenck\Traschtante;
 
 use Kirby;
 
 @include_once __DIR__ . '/vendor/autoload.php';
-
-load([
-    'Plugin\Traschtante\WebmentionReceiver' => 'utils/receiver.php',
-    'Plugin\Traschtante\HookHelper' => 'utils/hookHelper.php'
-], __DIR__);
 
 Kirby::plugin('mauricerenck/tratschtante', [
     'options' => require_once(__DIR__ . '/config/options.php'),

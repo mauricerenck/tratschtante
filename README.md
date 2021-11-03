@@ -1,4 +1,4 @@
-# Kirby Tratschtante
+# Kirby IndieConnector
 
 ## A Kirby Webmention Plugin your Plugins can subscribe to
 

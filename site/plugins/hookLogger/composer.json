@@ -1,5 +1,5 @@
 {
-  "name": "mauricerenck/tratschtante",
+  "name": "mauricerenck/indieConnector",
   "version": "1.0.2",
   "description": "Kirby Webmentions your plugins can subscribe to",
   "type": "kirby-plugin",

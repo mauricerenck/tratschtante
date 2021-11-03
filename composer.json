@@ -1,35 +1,36 @@
 {
-  "name": "mauricerenck/tratschtante",
-  "version": "1.0.5",
-  "description": "Kirby Webmentions your plugins can subscribe to",
-  "type": "kirby-plugin",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Maurice Renck",
-      "email": "hello@maurice-renck.de"
-    }
-  ],
-  "autoload": {
-    "psr-4": {
-      "mauricerenck\\Tratschtante\\": "utils/"
+    "name": "mauricerenck/indieconnector",
+    "version": "1.0.5",
+    "description": "Kirby Webmentions your plugins can subscribe to",
+    "type": "kirby-plugin",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Maurice Renck",
+            "email": "hello@maurice-renck.de"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "mauricerenck\\IndieConnector\\": "utils/"
+        },
+        "classmap": [
+            "utils"
+        ]
     },
-    "classmap": [
-      "utils"
-    ]
-  },
-  "require": {
-    "getkirby/composer-installer": "^1.1"
-  },
-  "require-dev": {
-    "getkirby/cms": "^3.5"
-  },
-  "config": {
-    "optimize-autoloader": true
-  },
-  "scripts": {
-    "test": "vendor/bin/phpunit --testdox tests",
-    "build-test-package": "git archive HEAD -o tratschtante.zip --worktree-attributes",
-    "build-composer": "composer install --no-dev --optimize-autoloader"
-  }
+    "require": {
+        "getkirby/composer-installer": "^1.1"
+    },
+    "require-dev": {
+        "getkirby/cms": "^3.6"
+    },
+    "config": {
+        "optimize-autoloader": true
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --testdox tests",
+        "build-test-package": "git archive HEAD -o indieConnector.zip --worktree-attributes",
+        "build-composer": "composer install --no-dev --optimize-autoloader"
+    },
+    "minimum-stability": "dev"
 }

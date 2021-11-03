@@ -1,8 +1,1 @@
 fields:
-  pageRating:
-    type: pageRating
-    fields:
-      positive:
-        type: number
-      negative:
-        type: number

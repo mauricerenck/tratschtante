@@ -1,16 +1,18 @@
 <?php
 
-namespace mauricerenck\Traschtante;
+namespace mauricerenck\IndieConnector;
 
 use Kirby;
 
+@require_once __DIR__ . '/lib/indieweb-comments.php';
 @include_once __DIR__ . '/vendor/autoload.php';
 
-Kirby::plugin('mauricerenck/tratschtante', [
+Kirby::plugin('mauricerenck/indieConnector', [
     'options' => require_once(__DIR__ . '/config/options.php'),
+    'areas' => require_once(__DIR__ . '/components/areas.php'),
     'routes' => [
         [
-            'pattern' => 'tratschtante/webhook/webmentionio',
+            'pattern' => 'indieConnector/webhook/webmentionio',
             'method' => 'POST',
             'action' => function () {
                 $response = json_decode(file_get_contents('php://input'));
@@ -18,18 +20,18 @@ Kirby::plugin('mauricerenck/tratschtante', [
                 $hookHelper = new HookHelper();
                 $webmention = [];
 
-                if ($response->secret !== option('mauricerenck.tratschtante.secret')) {
-                    return 'PAGE NOT FOUND';
+                if ($response->secret !== option('mauricerenck.indieConnector.secret')) {
+                    return 'PAGE NOT FOUND'; // FIXME forbidden, use kirby return status
                 }
 
                 $targetPage = $receiver->getPageFromUrl($response->post->{'wm-target'});
                 if (is_null($targetPage)) {
-                    return 'PAGE NOT FOUND';
+                    return 'PAGE NOT FOUND'; // FIXME use kirby return status
                 }
 
                 $webmention['type'] = $receiver->getWebmentionType($response->post->{'wm-property'});
-                $webmention['target'] = $response->post->{'wm-target'};
-                $webmention['source'] = $response->post->{'wm-source'};
+                $webmention['target'] = $targetPage->id();
+                $webmention['source'] = $receiver->getTransformedSourceUrl($response->post->{'wm-source'});
                 $webmention['published'] = (!is_null($response->post->published)) ? $response->post->published : $response->post->{'wm-received'};
                 $webmention['content'] = (isset($response->post->content) && isset($response->post->content->text)) ? $response->post->content->text : '';
                 $webmention['author'] = $receiver->getAuthor($response);
@@ -43,7 +45,12 @@ Kirby::plugin('mauricerenck/tratschtante', [
                     }
                 }
 
-                $hookHelper->triggerHook('tratschtante.webhook.received', ['webmention' => $webmention, 'targetPage' => $targetPage]);
+                $hookHelper->triggerHook('indieConnector.webhook.received', ['webmention' => $webmention, 'targetPage' => $targetPage]);
+
+                if (option('mauricerenck.indieConnector.stats', false)) {
+                    $stats = new WebmentionStats();
+                    $stats->trackMention($webmention['target'], $webmention['source'], $webmention['type'], $webmention['author']['avatar']);
+                }
 
                 return $webmention;
             }

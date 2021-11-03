@@ -1,6 +1,6 @@
 <?php
 
-namespace mauricerenck\Traschtante;
+namespace mauricerenck\IndieConnector;
 
 use Kirby;
 

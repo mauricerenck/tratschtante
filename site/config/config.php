@@ -2,5 +2,12 @@
 
 return [
     'debug' => true,
-    'mauricerenck.tratschtante.secret' => 'K7DiuLNLC;xJ'
+    'api' => [
+        'basicAuth' => true
+    ],
+    'languages' => true,
+    'mauricerenck.indieConnector.debug' => true,
+    'mauricerenck.indieConnector.secret' => 'my-screcet',
+    'mauricerenck.indieConnector.stats' => true,
+    'mauricerenck.indieConnector.sqlitePath' => '.sqlite/'
 ];

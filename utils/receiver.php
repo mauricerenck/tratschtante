@@ -1,16 +1,18 @@
 <?php
 
-namespace mauricerenck\Traschtante;
+namespace mauricerenck\IndieConnector;
 
 use Kirby\Http\Url;
 use Kirby\Toolkit\V;
 use Kirby\Toolkit\Str;
+use Kirby\Http\Remote;
 use json_decode;
 use json_encode;
 use is_null;
 use preg_split;
 use str_replace;
 use date;
+use Mf2;
 
 class WebmentionReceiver
 {
@@ -22,7 +24,8 @@ class WebmentionReceiver
 
             if ($languages->count() > 0) {
                 foreach ($languages as $language) {
-                    $path = str_replace($language . '/', '', $path);
+                    $languagePattern = '/^' . $language . '\//';
+                    $path = preg_replace($languagePattern, '', $path);
                 }
             }
 
@@ -38,6 +41,32 @@ class WebmentionReceiver
         return null;
     }
 
+    public function createWebmention()
+    {
+    }
+
+    public function getTransformedSourceUrl(string $url): string
+    {
+        if (V::url($url)) {
+            if (strpos($url, 'brid.gy') !== false) {
+                $bridyResult = Remote::get($url . '?format=json');
+                $bridyJson = json_decode($bridyResult->content());
+                $authorUrls = $bridyJson->properties->author[0]->properties->url;
+
+                foreach ($authorUrls as $authorUrl) {
+                    if ($this->isKnownNetwork($authorUrl)) {
+                        return $authorUrl;
+                    }
+                }
+            }
+
+            return $url;
+        }
+
+        return '';
+    }
+
+    // TODO move to webmention.io specific class
     public function getWebmentionType(string $wmProperty)
     {
         /*
@@ -67,5 +96,23 @@ class WebmentionReceiver
             'avatar' => (isset($authorInfo->photo) && !empty($authorInfo->photo)) ? $authorInfo->photo : null,
             'url' => (isset($authorInfo->url) && !empty($authorInfo->url)) ? $authorInfo->url : null,
         ];
+    }
+
+    private function isKnownNetwork(string $authorUrl): boolean
+    {
+        $networkHosts = [
+            'twitter.com',
+            'instagram.com',
+            'mastodon.online',
+            'mastodon.social',
+        ];
+
+        foreach ($networkHosts as $host) {
+            if (strpos($authorUrl, $host) !== false) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

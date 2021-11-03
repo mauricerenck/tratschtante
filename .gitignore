@@ -35,3 +35,6 @@
 /media
 /komments.zip
 webmentionhook.*.json
+/sqliteindieConnector.sqlite
+/.sqlite
+/.vscode

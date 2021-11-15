@@ -2,11 +2,14 @@
 
 #### A Kirby Webmention Plugin your Plugins can subscribe to
 
-![GitHub release](https://img.shields.io/github/release/mauricerenck/tratschtante.svg?maxAge=1800) ![License](https://img.shields.io/github/license/mashape/apistatus.svg) ![Kirby Version](https://img.shields.io/badge/Kirby-3%2B-black.svg)
 
 ---
 
 **THIS PLUGIN WILL BE DISCONTINUED!** With the launch of Kirby 3.6 this plugin won't receive updates. Please switch to [IndieConnector](https://github.com/mauricerenck/indieConnector) which comes with the same base functionality and which is 100% compatible with this plugin. 
+
+---
+
+![GitHub release](https://img.shields.io/github/release/mauricerenck/tratschtante.svg?maxAge=1800) ![License](https://img.shields.io/github/license/mashape/apistatus.svg) ![Kirby Version](https://img.shields.io/badge/Kirby-3%2B-black.svg)
 
 ---
 

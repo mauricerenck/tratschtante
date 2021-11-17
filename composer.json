@@ -24,6 +24,9 @@
   "require-dev": {
     "getkirby/cms": "^3.5"
   },
+  "suggest": {
+    "mauricerenck/indieconnector": "1.2.0"
+  },
   "config": {
     "optimize-autoloader": true
   },
